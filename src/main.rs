@@ -3,10 +3,7 @@ mod utlils;
 mod routes;
 
 
-#[get("/hello/{name}")]
-async fn greet(name: web::Path<String>) -> impl Responder {
-    format!("Hello {name}!")
-}
+
 
 #[actix_web::main] 
 async fn main() -> std::io::Result<()> {
@@ -24,7 +21,7 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(|| App::new()
     .wrap(Logger::default())
-    .service(greet))
+    .configure(routes::home_routes::config))
         .bind((address, port))?
         .run()
         .await
